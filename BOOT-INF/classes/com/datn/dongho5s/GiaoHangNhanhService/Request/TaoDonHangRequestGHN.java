@@ -1,0 +1,43 @@
+/*    */ package BOOT-INF.classes.com.datn.dongho5s.GiaoHangNhanhService.Request;
+/*    */ 
+/*    */ 
+/*    */ public class TaoDonHangRequestGHN {
+/*    */   private String note;
+/*    */   private String toName;
+/*    */   private String toPhone;
+/*    */   private String toAddress;
+/*    */   private Integer idQuanHuyen;
+/*    */   private String idPhuongXa;
+/*    */   
+/* 12 */   public void setNote(String note) { this.note = note; } private Integer weight; private List<ChiTietItemRequestGHN> listItems; private Double trungBinhTheTich; private Integer soLuongSanPham; private Integer phuongThuc; private Double thanhTien; public void setToName(String toName) { this.toName = toName; } public void setToPhone(String toPhone) { this.toPhone = toPhone; } public void setToAddress(String toAddress) { this.toAddress = toAddress; } public void setIdQuanHuyen(Integer idQuanHuyen) { this.idQuanHuyen = idQuanHuyen; } public void setIdPhuongXa(String idPhuongXa) { this.idPhuongXa = idPhuongXa; } public void setWeight(Integer weight) { this.weight = weight; } public void setListItems(List<ChiTietItemRequestGHN> listItems) { this.listItems = listItems; } public void setTrungBinhTheTich(Double trungBinhTheTich) { this.trungBinhTheTich = trungBinhTheTich; } public void setSoLuongSanPham(Integer soLuongSanPham) { this.soLuongSanPham = soLuongSanPham; } public void setPhuongThuc(Integer phuongThuc) { this.phuongThuc = phuongThuc; } public void setThanhTien(Double thanhTien) { this.thanhTien = thanhTien; } public boolean equals(Object o) { if (o == this) return true;  if (!(o instanceof com.datn.dongho5s.GiaoHangNhanhService.Request.TaoDonHangRequestGHN)) return false;  com.datn.dongho5s.GiaoHangNhanhService.Request.TaoDonHangRequestGHN other = (com.datn.dongho5s.GiaoHangNhanhService.Request.TaoDonHangRequestGHN)o; if (!other.canEqual(this)) return false;  Object this$idQuanHuyen = getIdQuanHuyen(), other$idQuanHuyen = other.getIdQuanHuyen(); if ((this$idQuanHuyen == null) ? (other$idQuanHuyen != null) : !this$idQuanHuyen.equals(other$idQuanHuyen)) return false;  Object this$weight = getWeight(), other$weight = other.getWeight(); if ((this$weight == null) ? (other$weight != null) : !this$weight.equals(other$weight)) return false;  Object this$trungBinhTheTich = getTrungBinhTheTich(), other$trungBinhTheTich = other.getTrungBinhTheTich(); if ((this$trungBinhTheTich == null) ? (other$trungBinhTheTich != null) : !this$trungBinhTheTich.equals(other$trungBinhTheTich)) return false;  Object this$soLuongSanPham = getSoLuongSanPham(), other$soLuongSanPham = other.getSoLuongSanPham(); if ((this$soLuongSanPham == null) ? (other$soLuongSanPham != null) : !this$soLuongSanPham.equals(other$soLuongSanPham)) return false;  Object this$phuongThuc = getPhuongThuc(), other$phuongThuc = other.getPhuongThuc(); if ((this$phuongThuc == null) ? (other$phuongThuc != null) : !this$phuongThuc.equals(other$phuongThuc)) return false;  Object this$thanhTien = getThanhTien(), other$thanhTien = other.getThanhTien(); if ((this$thanhTien == null) ? (other$thanhTien != null) : !this$thanhTien.equals(other$thanhTien)) return false;  Object this$note = getNote(), other$note = other.getNote(); if ((this$note == null) ? (other$note != null) : !this$note.equals(other$note)) return false;  Object this$toName = getToName(), other$toName = other.getToName(); if ((this$toName == null) ? (other$toName != null) : !this$toName.equals(other$toName)) return false;  Object this$toPhone = getToPhone(), other$toPhone = other.getToPhone(); if ((this$toPhone == null) ? (other$toPhone != null) : !this$toPhone.equals(other$toPhone)) return false;  Object this$toAddress = getToAddress(), other$toAddress = other.getToAddress(); if ((this$toAddress == null) ? (other$toAddress != null) : !this$toAddress.equals(other$toAddress)) return false;  Object this$idPhuongXa = getIdPhuongXa(), other$idPhuongXa = other.getIdPhuongXa(); if ((this$idPhuongXa == null) ? (other$idPhuongXa != null) : !this$idPhuongXa.equals(other$idPhuongXa)) return false;  Object<ChiTietItemRequestGHN> this$listItems = (Object<ChiTietItemRequestGHN>)getListItems(), other$listItems = (Object<ChiTietItemRequestGHN>)other.getListItems(); return !((this$listItems == null) ? (other$listItems != null) : !this$listItems.equals(other$listItems)); } protected boolean canEqual(Object other) { return other instanceof com.datn.dongho5s.GiaoHangNhanhService.Request.TaoDonHangRequestGHN; } public int hashCode() { int PRIME = 59; result = 1; Object $idQuanHuyen = getIdQuanHuyen(); result = result * 59 + (($idQuanHuyen == null) ? 43 : $idQuanHuyen.hashCode()); Object $weight = getWeight(); result = result * 59 + (($weight == null) ? 43 : $weight.hashCode()); Object $trungBinhTheTich = getTrungBinhTheTich(); result = result * 59 + (($trungBinhTheTich == null) ? 43 : $trungBinhTheTich.hashCode()); Object $soLuongSanPham = getSoLuongSanPham(); result = result * 59 + (($soLuongSanPham == null) ? 43 : $soLuongSanPham.hashCode()); Object $phuongThuc = getPhuongThuc(); result = result * 59 + (($phuongThuc == null) ? 43 : $phuongThuc.hashCode()); Object $thanhTien = getThanhTien(); result = result * 59 + (($thanhTien == null) ? 43 : $thanhTien.hashCode()); Object $note = getNote(); result = result * 59 + (($note == null) ? 43 : $note.hashCode()); Object $toName = getToName(); result = result * 59 + (($toName == null) ? 43 : $toName.hashCode()); Object $toPhone = getToPhone(); result = result * 59 + (($toPhone == null) ? 43 : $toPhone.hashCode()); Object $toAddress = getToAddress(); result = result * 59 + (($toAddress == null) ? 43 : $toAddress.hashCode()); Object $idPhuongXa = getIdPhuongXa(); result = result * 59 + (($idPhuongXa == null) ? 43 : $idPhuongXa.hashCode()); Object<ChiTietItemRequestGHN> $listItems = (Object<ChiTietItemRequestGHN>)getListItems(); return result * 59 + (($listItems == null) ? 43 : $listItems.hashCode()); } public String toString() { return "TaoDonHangRequestGHN(note=" + getNote() + ", toName=" + getToName() + ", toPhone=" + getToPhone() + ", toAddress=" + getToAddress() + ", idQuanHuyen=" + getIdQuanHuyen() + ", idPhuongXa=" + getIdPhuongXa() + ", weight=" + getWeight() + ", listItems=" + getListItems() + ", trungBinhTheTich=" + getTrungBinhTheTich() + ", soLuongSanPham=" + getSoLuongSanPham() + ", phuongThuc=" + getPhuongThuc() + ", thanhTien=" + getThanhTien() + ")"; } public TaoDonHangRequestGHN(String note, String toName, String toPhone, String toAddress, Integer idQuanHuyen, String idPhuongXa, Integer weight, List<ChiTietItemRequestGHN> listItems, Double trungBinhTheTich, Integer soLuongSanPham, Integer phuongThuc, Double thanhTien) {
+/* 13 */     this.note = note; this.toName = toName; this.toPhone = toPhone; this.toAddress = toAddress; this.idQuanHuyen = idQuanHuyen; this.idPhuongXa = idPhuongXa; this.weight = weight; this.listItems = listItems; this.trungBinhTheTich = trungBinhTheTich; this.soLuongSanPham = soLuongSanPham; this.phuongThuc = phuongThuc; this.thanhTien = thanhTien;
+/*    */   } public TaoDonHangRequestGHN() {} public static TaoDonHangRequestGHNBuilder builder() {
+/* 15 */     return new TaoDonHangRequestGHNBuilder();
+/*    */   }
+/* 17 */   public String getNote() { return this.note; }
+/* 18 */   public String getToName() { return this.toName; }
+/* 19 */   public String getToPhone() { return this.toPhone; }
+/* 20 */   public String getToAddress() { return this.toAddress; }
+/* 21 */   public Integer getIdQuanHuyen() { return this.idQuanHuyen; }
+/* 22 */   public String getIdPhuongXa() { return this.idPhuongXa; }
+/* 23 */   public Integer getWeight() { return this.weight; }
+/* 24 */   public List<ChiTietItemRequestGHN> getListItems() { return this.listItems; }
+/* 25 */   public Double getTrungBinhTheTich() { return this.trungBinhTheTich; }
+/* 26 */   public Integer getSoLuongSanPham() { return this.soLuongSanPham; }
+/* 27 */   public Integer getPhuongThuc() { return this.phuongThuc; } public Double getThanhTien() {
+/* 28 */     return this.thanhTien;
+/*    */   }
+/*    */   public Integer getTrungBinhCacCanh() {
+/* 31 */     Double theTichToanBoSanPham = Double.valueOf(Math.pow(Constant.DO_DAI_CANH_HOP_HANG.intValue(), 3.0D) * this.soLuongSanPham.intValue());
+/* 32 */     return Integer.valueOf((int)Math.cbrt(theTichToanBoSanPham.doubleValue()));
+/*    */   }
+/*    */   public String getStringPhuongXa() {
+/* 35 */     return String.valueOf(this.idPhuongXa);
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\Huy PC\Downloads\WebBanHang-20230821T142944Z-001\WebBanHang\app\app.jar!\BOOT-INF\classes\com\datn\dongho5s\GiaoHangNhanhService\Request\TaoDonHangRequestGHN.class
+ * Java compiler version: 11 (55.0)
+ * JD-Core Version:       1.1.3
+ */

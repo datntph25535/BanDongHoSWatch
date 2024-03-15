@@ -1,0 +1,546 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="admin/fragment/fragments:: page_head"></head>
+
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .thong-tin-hoa-don>div{
+    padding-bottom: 5px;
+  }
+
+  .nav-item:hover .nav-link {
+    font-weight: bold;
+  }
+  .tracking nav ul li a {
+    color: #050505;
+    display: block;
+    font-size: 14px;
+    line-height: 55px;
+    transition: all 300ms ease 0s;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .tracking nav ul li {
+    /*border-bottom: 2px solid orange;*/
+    display: inline-block;
+    width: 16%;
+
+  }
+  .tracking nav ul li a:hover {
+    color: #FF4F4F;
+  }
+  .tracking nav ul li a:active {
+    color: #FF4F4F;
+    border-bottom: 2px solid #FF4F4F;
+  }
+  .tracking nav ul .active{
+    border-bottom: 2px solid #FF4F4F;
+  }
+  .tracking nav ul .active a{
+    color: #FF4F4F;
+  }
+
+  .breadcrumb {
+    background-color: #f2f2f2;
+    padding: 10px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    padding: 5px 20px;
+  }
+
+  .breadcrumb a {
+    color: #666;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-size: 20px;
+  }
+</style>
+
+<body class="sb-nav-fixed" id="content">
+<div th:replace="admin/fragment/navigation:: navbar"></div>
+<!-- Article NAV -->
+<div id="layoutSidenav">
+  <div th:replace="admin/fragment/navigation:: menu"></div>
+
+  <!-- aside -->
+  <div id="layoutSidenav_content">
+    <!-- MAIN-CONTENT-SECTION START -->
+    <section class="main-content-section">
+      <div class="row">
+        <div class="breadcrumb">
+          <a href="#">Bán hàng</a>
+        </div>
+<!--        <span th:if="${session.donHangHienTai != null}" th:text="${session.donHangHienTai}"></span>-->
+<!--        <span th:if="${session.donHangHienTai == null}" th:text="'Giá trị không tồn tại'"></span>-->
+      </div>
+      <div style="max-width: 90%;margin: auto;">
+        <div class="row">
+          <div class="col-sm-9">
+            <!--  Ban hang-->
+            <h3 style="font-weight: bold">Chi tiết hoá đơn</h3>
+            <div class="row gio-hang bg-body-tertiary p-3 rounded border border-light" style="height: 300px; overflow: scroll">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">Mã sản phẩm</th>
+                  <th scope="col">Tên sản phẩm</th>
+                  <th scope="col">Đơn giá</th>
+                  <th scope="col">Số lượng</th>
+                  <th scope="col">Khuyến mại</th>
+                  <th scope="col">Chức năng</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="hdct : ${lstHDCT}">
+                  <td th:text="${hdct.chiTietSanPham.maChiTietSanPham}"></td>
+                  <td th:text="${hdct.chiTietSanPham.sanPham.tenSanPham}"></td>
+                  <td th:text="${#numbers.formatDecimal(hdct.chiTietSanPham.giaSanPham, 0, 'COMMA', 0, 'POINT')} +
+                  ' đ'"></td>
+                  <td th:text="${hdct.soLuong}"></td>
+                  <td th:text="${hdct.chiTietSanPham.khuyenMai == null || hdct.chiTietSanPham.khuyenMai.enabled == false ? '' : hdct.chiTietSanPham.khuyenMai.chietKhau }"></td>
+                  <td>
+                    <a class="btn btn-outline-dark hoa-don-chi-tiet-xoa"
+                        data-bs-toggle="modal"
+                        data-bs-target="#xoaSanPham"
+                        th:data-id-hdct="${hdct.idHoaDonChiTiet}"
+                    >Xóa</a>
+                    <a class="btn btn-outline-dark hoa-don-chi-tiet-sua"
+                       data-bs-toggle="modal"
+                       data-bs-target="#suaSanPham"
+                       th:data-id-hdct-sua="${hdct.idHoaDonChiTiet}"
+                    >Sửa</a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--  San pham-->
+            <div class="row gio-hang bg-body-tertiary p-3 rounded border border-light">
+              <h3 style="font-weight: bold">Sản phẩm</h3>
+
+              <div class="row">
+                <div class="col-md-7">
+                  <form>
+                    <div class="row">
+                      <input class="col-sm-8">
+                      <div class="col-sm-4">
+                        <button type="submit" class="btn btn-outline-dark">Tìm kiếm</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-5">
+                  <form>
+                    <div class="row">
+                      <label for="danhMuc" class="col-sm-4">Thể loại</label>
+                      <div class="col-sm-8">
+                        <select class="form-select" id="danhMuc">
+                          <option selected>Cao cấp</option>
+                          <option value="1">Hạng Trung</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">Mã sản phẩm</th>
+                  <th scope="col">Tên sản phẩm</th>
+                  <th scope="col">Đơn giá</th>
+                  <th scope="col">Số lượng</th>
+                  <th scope="col">Màu sắc</th>
+                  <th scope="col">Vật liệu</th>
+                  <th scope="col">Giảm giá</th>
+                  <th scope="col">Chức năng</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="sp : ${listSanPham}">
+                  <td th:text="${sp.maChiTietSanPham}"></td>
+                  <td th:text="${sp.sanPham.tenSanPham}"></td>
+                  <td th:text="${#numbers.formatDecimal(sp.giaSanPham, 0, 'COMMA', 0, 'POINT')} +
+                  ' đ'"></td>
+                  <td th:text="${sp.soLuong}"></td>
+                  <td th:text="${sp.mauSac.tenMauSac}"></td>
+                  <td th:text="${sp.vatLieu.tenVatLieu}"></td>
+                  <td th:text="${sp.khuyenMai == null || sp.khuyenMai.enabled == false ? '' : sp.khuyenMai.chietKhau}"></td>
+                  <td>
+                    <a class="btn btn-outline-danger them-san-pham"
+                       data-bs-toggle="modal"
+                       data-bs-target="#soLuongSanPham"
+                       th:data-ma-ctsp="${sp.maChiTietSanPham}"
+                       th:data-so-luong-ton="${sp.soLuong}"
+                    >Thêm</a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <div th:if="${totalPages > 1}">
+                <nav>
+                  <ul class="pagination justify-content-center">
+                    <li th:class="${currentPage > 1 ?'page-item' : 'page-item disabled'}">
+                      <a th:replace="admin/fragment/fragments::page_spct_link(1, 'Trang Đầu')" ></a>
+                    </li>
+                    <li th:class="${currentPage > 1 ?'page-item' : 'page-item disabled'}">
+                      <a th:replace="admin/fragment/fragments::page_spct_link(${currentPage - 1}, Trước)"></a>
+                    </li>
+
+                    <li th:class="${currentPage != i ? 'page-item': 'page-item disabled' }"
+                        th:each="i : ${#numbers.sequence(currentPage == 1 ? currentPage : (currentPage - 1), (currentPage + 1) < totalPages ? (currentPage + 1) : totalPages )}">
+                      <a th:replace="admin/fragment/fragments::page_spct_link(${i}, ${i})"></a>
+                    </li>
+
+                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                      <a th:replace="admin/fragment/fragments::page_spct_link(${currentPage + 1}, Sau)"></a>
+                    </li>
+                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                      <a th:replace="admin/fragment/fragments::page_spct_link(${totalPages}, 'Trang Cuối')"></a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+          <!--  Thanh toan-->
+          <div class="col-sm-3">
+            <h3 style="font-weight: bold">Thông tin</h3>
+            <form th:action="@{/admin/ban-hang/khach-hang/tim-kiem}" class="form-inline m-3" method="GET">
+              <div class="d-flex align-items-center">
+                <input style="width: 250px; margin-right: 10px" type="search" placeholder="Tìm kiếm" class="form-control" required name="phoneNumber" />
+                <input style="margin-right: 10px" type="submit" value="Tìm kiếm" class="btn btn-outline-info ml-2" />
+              </div>
+            </form>
+            <form th:object="${hoaDonAdminRequest}" th:action="@{/admin/ban-hang/hoa-don/tao-moi}" method="post">
+              <div class="row thong-tin-hoa-don bg-body-tertiary p-3 rounded border border-light">
+                  <div class="col-md-4">
+                    <label for="maHoaDon" class="form-label">Mã hóa đơn</label>
+                    <input type="text" class="form-control" id="maHoaDon" name="maHoaDon" th:field="*{maHoaDon}" disabled style="background-color: white">
+                  </div>
+                  <div class="col-md-8">
+                    <label for="sdt" class="form-label">SĐT</label>
+                    <input type="text" class="form-control" id="sdt" name="sdt" th:field="*{sdt}">
+                  </div>
+                  <div class="col-12">
+                    <label for="ten" class="form-label">Tên khách hàng</label>
+                    <input type="text" class="form-control" id="ten" name="tenKhachHang" th:field="*{tenKhachHang}">
+                  </div>
+                  <div class="col-12">
+                    <label for="ngayTao" class="form-label">Ngày tạo</label>
+                    <input type="date" class="form-control" id="ngayTao" name="ngayTao" disabled th:field="*{ngayTao}" style="background-color: white">
+                  </div>
+                  <div class="col-md-12">
+                    <label for="thanhTien" class="form-label">Thành tiền</label>
+                    <input type="text" class="form-control" id="thanhTien" name="tongTienDonHang" th:field="*{tongTienDonHang}" disabled style="background-color: white">
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-outline-primary"
+                            type="submit"
+                            id="tao-moi-don-hang"
+                    >Tạo mới</button>
+
+                    <button class="btn btn-outline-danger" id="thanhToan"
+                       data-bs-toggle="modal"
+                      type="button"
+                       data-bs-target="#thanhToanHoaDon"
+                    >Thanh toán</button>
+                    <button class="btn btn-outline-dark"id="huyDon"
+                            data-bs-toggle="modal"
+                            type="button"
+                            data-bs-target="#huyHoaDon"
+                    >Hủy</button>
+                  </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  </section>
+  <!-- MAIN-CONTENT-SECTION END -->
+
+    </div>
+</div>
+<!-- END article -->
+
+<!--  Footer      -->
+<div th:replace="admin/fragment/fragments::footer"></div>
+
+<!--  add san pham -->
+<!-- Modal -->
+<div class="modal fade" id="soLuongSanPham" tabindex="-1" aria-labelledby="soLuongSanPhamLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="soLuongSanPhamLabel">Cập nhật</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <label for="soLuongThem" class="col-sm-2 col-form-label">Số lượng</label>
+          <div class="col-sm-10">
+            <input type="text" id="soLuongThem" class="form-control">
+          </div>
+        </form>
+        <label id="errorMessage" style="color: red; display: none;">Giá trị không hợp lệ!</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" id="themSoLuong" class="btn btn-outline-danger" data-bs-dismiss="modal">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--   add san pham end     -->
+
+<!--  xoa san pham tu hoa don chi tiet -->
+<div class="modal fade" id="xoaSanPham" tabindex="-1" aria-labelledby="xoaSanPhamLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="xoaSanPhamLabel">Bạn có muốn xóa sản phẩm này khỏi đơn hàng không?</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" id="xoaSanPhamHDCT" class="btn btn-outline-danger" data-bs-dismiss="modal">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  xoa san pham tu hoa don chi tiet end -->\
+
+<!--  cap nhat so luong san pham chi tiet -->
+<!-- Modal -->
+<div class="modal fade" id="suaSanPham" tabindex="-1" aria-labelledby="suaSanPhamLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="soLuongSanPhamCTLabel">Cập nhật</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <label for="soLuongThem" class="col-sm-2 col-form-label">Số lượng</label>
+          <div class="col-sm-10">
+            <input type="text" id="soLuongThemCapNhat" class="form-control">
+          </div>
+        </form>
+<!--        <label id="errorMessage" style="color: red; display: none;">Giá trị không hợp lệ!</label>-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" id="capNhatSoLuong" class="btn btn-outline-danger" data-bs-dismiss="modal">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--   add san pham end     -->
+
+<!--  thanhToan hoa don-->
+<div class="modal fade" id="thanhToanHoaDon" tabindex="-1" aria-labelledby="thanhToanHoaDonLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="thanhToanHoaDonLabel">Thanh toán</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" id="xacNhanThanhToan" class="btn btn-outline-danger" data-bs-dismiss="modal">Xác nhận</button>
+        <button type="button" id="xuatHoaDon" class="btn btn-outline-danger" data-bs-dismiss="modal">Xuất hóa đơn</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="huyHoaDon" tabindex="-1" aria-labelledby="huyHoaDonLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="huyHoaDonLabel">Hủy</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" id="huyDonHangHienTai" class="btn btn-outline-danger" data-bs-dismiss="modal">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // var today = new Date();
+  // var dd = today.getDate();
+  // var mm = today.getMonth()+1; // Tháng bắt đầu từ 0
+  // var yyyy = today.getFullYear();
+  // if(dd<10){
+  //   dd='0'+dd;
+  // }
+  // if(mm<10){
+  //   mm='0'+mm;
+  // }
+  // var todayFormatted = yyyy+'-'+mm+'-'+dd; // Chuỗi ngày tháng được định dạng theo định dạng của input type="date"
+  // document.getElementById("ngayTao").value = todayFormatted; // Set giá trị mặc định cho input
+
+
+  var inputField = document.getElementById('sdt');
+  var submitButton = document.getElementById('tao-moi-don-hang');
+
+  inputField.addEventListener('input', function() {
+    fetch(`/admin/ban-hang/khach-hang/api/` + inputField.value.trim())
+            .then(response => response.text())
+            .then(data => {
+              // Kiểm tra kết quả từ server và xử lý tương ứng
+              if (data === inputField.value.trim()) {
+                submitButton.disabled = true;
+              } else {
+                submitButton.disabled = false;
+              }
+            })
+            .catch(error => {
+              console.error('Lỗi:', error);
+            });
+  });
+
+  var maCTSP;
+  var soLuongTon;
+
+  $('.them-san-pham').click(function() {
+    maCTSP = $(this).data('ma-ctsp');
+    soLuongTon = $(this).data('so-luong-ton');
+  });
+
+  $(document).ready(function() {
+    // Theo dõi sự thay đổi trong ô input
+    $("#soLuongThem").on("input", function() {
+      var soLuongThem = document.getElementById('soLuongThem').value;
+      var parttern = /^[0-9]+$/;
+      // Kiểm tra giá trị
+      if (soLuongThem > soLuongTon || soLuongThem <= 0 || !parttern.test(soLuongThem)) {
+        $("#themSoLuong").prop("disabled", true);
+        // Hiển thị thông báo lỗi
+        $("#errorMessage").show();
+      } else {
+        $("#themSoLuong").prop("disabled", false);
+        // Ẩn thông báo lỗi
+        $("#errorMessage").hide();
+      }
+    });
+  });
+
+  $('#themSoLuong').click(function() {
+    var soLuongThem = document.getElementById('soLuongThem').value;
+    $.ajax({
+      url: "/admin/ban-hang/them/"+ maCTSP + "/" + soLuongThem,
+      method: "POST",
+      success: function(response) {
+        $('#content').html(response);
+      },
+      error: function(xhr, status, error) {
+        console.log("Lỗi: " + error);
+      }
+    });
+  });
+  // erro
+  $('#xacNhanThanhToan').click(function() {
+    $.ajax({
+      url: "/admin/ban-hang/hoa-don/thanh-toan",
+      method: "POST",
+      success: function(response) {
+        $('#content').html(response);
+      },
+      error: function(xhr, status, error) {
+        console.log("Lỗi: " + error);
+      }
+    });
+  });
+
+  $('#xuatHoaDon').click(function() {
+    $.ajax({
+      url: "/admin/ban-hang/hoa-don/xuat-hoa-don",
+      method: "POST",
+      success: function(response) {
+        $('#content').html(response);
+      },
+      error: function(xhr, status, error) {
+        console.log("Lỗi: " + error);
+      }
+    });
+  });
+
+  $('#huyDonHangHienTai').click(function() {
+    $.ajax({
+      url: "/admin/ban-hang/hoa-don/huy",
+      method: "POST",
+      success: function(response) {
+        $('#content').html(response);
+      },
+      error: function(xhr, status, error) {
+        console.log("Lỗi: " + error);
+      }
+    });
+  });
+
+  // chuc nang xoa san pham tu hoa don chi tiet
+  var idHDCTXoa;
+  $('.hoa-don-chi-tiet-xoa').click(function() {
+    idHDCTXoa = $(this).data('id-hdct');
+  });
+
+  $('#xoaSanPhamHDCT').click(function() {
+    $.ajax({
+      url: "/admin/ban-hang/hoa-don-chi-tiet/"+ idHDCTXoa,
+      method: "POST",
+      success: function(response) {
+        $('#content').html(response);
+      },
+      error: function(xhr, status, error) {
+        console.log("Lỗi: " + error);
+      }
+    });
+  });
+  // chuc nang xoa san pham tu hoa don chi tiet end
+
+  // chuc nang cap nhat san pham tu hoa don chi tiet
+
+  var idHDCTSua;
+  $('.hoa-don-chi-tiet-sua').click(function() {
+    idHDCTSua = $(this).data('id-hdct-sua');
+  });
+
+  $('#capNhatSoLuong').click(function() {
+    var a = document.getElementById("soLuongThemCapNhat").value;
+    console.log(a,"so luong","ma",idHDCTSua);
+    $.ajax({
+      url: "/admin/ban-hang/hoa-don-chi-tiet/sua/"+ idHDCTSua+"/so-luong/" + a,
+      method: "POST",
+      success: function(response) {
+        $('#content').html(response);
+      },
+      error: function(xhr, status, error) {
+        console.log("Lỗi: " + error);
+      }
+    });
+  });
+  // chuc nang cap nhat san pham tu hoa don chi tiet end
+</script>
+</body>
+</html>
